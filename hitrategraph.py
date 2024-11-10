@@ -21,7 +21,7 @@ def find_file(directory, pattern):
 def prepinferece(basepath):
     curdir = os.getcwd()
     for index, elem in enumerate(evalset):
-        infpath = os.path.join(basepath, elem)
+        infpath = '/home2/escho/pros/inf_results'
         os.chdir(infpath)
         os.system(f'echo {infpath}; ls fixed-reduce | wc -l')
         if find_file(infpath, 'correctlist') == False:
@@ -191,5 +191,5 @@ if __name__ == '__main__':
     plt.ylabel("Hit Rate")
     plt.title("Train Code validation")
     plt.legend()
-    plt.savefig('hitrate_ea.png')
+    plt.savefig('/home2/escho/pros/hitrate_ea.png')
 

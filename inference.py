@@ -14,16 +14,16 @@ import torch.nn as nn
 from argparser import argparser
 from commonfncs import getatomfeaturelen, getatomfeaturelen_f
 
-npzdirpf = 'npz-lt'
+npzdirpf = '/home2/escho/pros/npz-nf'
 
 def inference_dir(params):
     global npzdirpf
 
-    input_path=os.path.abspath(params['F'])
-    save_path = os.path.join(os.getcwd(), "inf_results")
-    os.system(f'mkdir {save_path} 2> /dev/null')
+    input_path = os.path.abspath(params['F']) if params['F'] else '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb'
+    save_path = '/home2/escho/pros/inf_results'
+    os.system(f'mkdir -p {save_path}')
     save_path = os.path.join(save_path, input_path.split('/')[-1])
-    os.system(f'mkdir {save_path} 2> /dev/null')
+    os.system(f'mkdir -p {save_path}')
 
     # loading the model
     #model_path = os.path.join(os.getcwd(), "best_model_pepcompbl")

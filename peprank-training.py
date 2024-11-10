@@ -14,6 +14,7 @@ from argparser import argparser
 from ea_gnn import GNN_EA, npzdataset
 from commonfncs import getatomfeaturelen_f
 from collatefncs import collate_fn_orgA2
+from commonfncs import atom_feature
 
 class AverageMeter(object):
     def __init__(self):
@@ -91,9 +92,13 @@ if __name__ == "__main__":
     device = torch.device('cuda') 
     model.to(device)
 
-    list_posfile = []
-    list_negfile = []
-    
+    #list_posfile = []
+    #list_negfile = []
+    path = '/home2/escho/pros/npz-eas/'
+    list_posfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
+    list_negfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
+
+
     maxlen = params['maxfnum']
     if not None == params['F']:
         path = params['F']
@@ -137,8 +142,8 @@ if __name__ == "__main__":
     loss_list = []
     best_acc = 0
     n_epoch = 50
-    os.system('mkdir chkpts 2> /dev/null')
-    os.system('mkdir model 2> /dev/null')
+    os.system('mkdir -p /home2/escho/pros/chkpts 2> /dev/null')
+    os.system('mkdir -p /home2/escho/pros/model 2> /dev/null')
     sdatetime = str(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M'))
 
     print(model)
@@ -154,6 +159,8 @@ if __name__ == "__main__":
         starttime = time.time()
         print(f'Epoch {k} started at', datetime.datetime.fromtimestamp(starttime).isoformat())
         train_loss = train_model(model, train_dataloader, optimizer, loss_fn, device)
+        #loss per epoch
+        loss_list.append(train_loss)
         scheduler.step()
         
         print("Avg loss: ",train_loss)
@@ -161,8 +168,8 @@ if __name__ == "__main__":
         if k % 5 == 0:
             torch.save( {'epoch': k, 'state_dict': model.state_dict(),
                 'loss': train_loss, 'best_roc': best_acc, 'optimizer': optimizer.state_dict(),
-                }, 'chkpts/model'+sdatetime+'-'+str(k)+'.pt')
+                }, f'/home2/escho/pros/chkpts/model{sdatetime}-{k}.pt')
 
-    path = f'model/{sdatetime}.pth.tar'
+    path = f'/home2/escho/pros/model/{sdatetime}.pth.tar'
     print(f'Training finished, params saved as {path}.')
     torch.save(model.state_dict(), path)

@@ -12,10 +12,10 @@ import multiprocessing as mp
 
 from extract_interface import *
 from commonfncs import get_atom_feature_f
+from commonfncs import atom_feature
 
-
-input_path = ''
-gNpzdir = ''
+input_path = '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb'
+gNpzdir = '/home2/escho/pros/npz-eas'
 Y = np.array([1.0]) 
 recifext = ".rec-if.pdb"
 ligifext = ".lig-if.pdb"
@@ -66,8 +66,8 @@ def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = False):
     try:
         receptor_count = receptor_mol.GetNumAtoms()
         ligand_count = ligand_mol.GetNumAtoms()
-        receptor_feature = get_atom_feature_f(receptor_mol)
-        ligand_feature = get_atom_feature_f(ligand_mol)
+        receptor_feature = atom_feature(receptor_mol, include_implicitvalence=True, include_elecneg=True)
+        ligand_feature = atom_feature(ligand_mol, include_implicitvalence=True, include_elecneg=True)
         #print(receptor_feature.shape, ligand_feature.shape)
 
         # get receptor adj matrix
@@ -159,18 +159,28 @@ def verify_npz_dir_mp(dirpath, num_procs = 10):
         pool.join()
 
 if __name__ == "__main__":
-    gNpzdir = 'npz-eas' #expanded atom set
-    if (len(sys.argv) > 1):
-        input_path = sys.argv[1]
-    if (len(sys.argv) > 2):
-        gNpzdir = sys.argv[2]
-    if (len(sys.argv) > 3):
+    gNpzdir = 'npz-eas'  # 기본 디렉토리 설정
+    include_implicitvalence = True  # 기본값: implicitvalence 포함
+    include_elecneg = True  # 기본값: elecneg 포함
+
+    # 명령줄 인자로 파라미터를 입력받아 설정
+    if len(sys.argv) > 1:
+        input_path = sys.argv[1]  # 첫 번째 인자는 입력 경로
+    if len(sys.argv) > 2:
+        gNpzdir = sys.argv[2]  # 두 번째 인자는 npz 디렉토리 이름
+    if len(sys.argv) > 3:
         Y = np.empty(1)
-        Y[0] = float(sys.argv[3])
-    elif ('neg' in input_path): #hack!
-        Y = np.array([0.])
-    print("Params:", input_path, gNpzdir, Y)
+        Y[0] = float(sys.argv[3])  # 세 번째 인자는 Y 값 (0 또는 1)
+    elif 'neg' in input_path:  # 경로에 'neg'가 포함되면 음성으로 설정
+        Y = np.array([0.0])
+    if len(sys.argv) > 4:
+        include_implicitvalence = bool(int(sys.argv[4]))  # 네 번째 인자는 implicitvalence 포함 여부 (0 또는 1)
+    if len(sys.argv) > 5:
+        include_elecneg = bool(int(sys.argv[5]))  # 다섯 번째 인자는 elecneg 포함 여부 (0 또는 1)
+
+    print("Params:", input_path, gNpzdir, include_implicitvalence, include_elecneg, Y)
     gen_npzs_dir_mp(input_path, 10)
+
 
 
 
