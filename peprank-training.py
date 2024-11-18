@@ -12,9 +12,9 @@ import numpy as np
 import datetime
 from argparser import argparser
 from ea_gnn import GNN_EA, npzdataset
-from commonfncs import getatomfeaturelen_f
+from test_20241118commonfncs import getatomfeaturelen_f
 from collatefncs import collate_fn_orgA2
-from commonfncs import atom_feature
+from test_20241118commonfncs import atom_feature
 
 class AverageMeter(object):
     def __init__(self):
@@ -30,7 +30,7 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
         
-def train_model(model,train_dataloader,optimizer,loss_fn,device):
+def train_model(model,train_dataloader,optimizer,loss_fn,device, include_implicitvalence=True, include_elecneg=True):
 
     Loss = AverageMeter()
     model.train()
@@ -141,7 +141,7 @@ if __name__ == "__main__":
     list_train = list_posfile + list_negfile
     loss_list = []
     best_acc = 0
-    n_epoch = 50
+    n_epoch = 20
     os.system('mkdir -p /home2/escho/pros/chkpts 2> /dev/null')
     os.system('mkdir -p /home2/escho/pros/model 2> /dev/null')
     sdatetime = str(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M'))
@@ -158,7 +158,9 @@ if __name__ == "__main__":
     for k in range(n_epoch):
         starttime = time.time()
         print(f'Epoch {k} started at', datetime.datetime.fromtimestamp(starttime).isoformat())
-        train_loss = train_model(model, train_dataloader, optimizer, loss_fn, device)
+        train_loss = train_model(model, train_dataloader, optimizer, loss_fn, device,
+                                 include_implicitvalence=params['include_implicitvalence'],
+                                 include_elecneg=params['include_elecneg'])
         #loss per epoch
         loss_list.append(train_loss)
         scheduler.step()

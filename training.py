@@ -63,7 +63,7 @@ train_list+=list_negfile
 
 loss_list = []
 best_acc = 0
-epoch = 50
+epoch = 30
 
 for k in range(epoch):
     print(k)

@@ -1,5 +1,5 @@
 # Copyright 2024 Joon-Sang Park. All Rights Reserved.
- 
+"""
 import sys
 import os
 import shutil
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     print(board2[0])
     print(board[0])
 
-    """
+    '''
     path = '/mnt/rv1/althome/jhhwang/minji/jhhwang/Predict_Result_Atom/trained/result/'
     results=[x for x in os.listdir(path) ] # 1a2k.txt ...
     results.sort()
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     d = np.array(board3)
     e = np.sum(d, axis=0)
     e = e/num_pdb
-    """
+    '''
 
     b = np.array(board)
     c = np.sum(b, axis=0)
@@ -193,3 +193,100 @@ if __name__ == '__main__':
     plt.legend()
     plt.savefig('/home2/escho/pros/hitrate_ea.png')
 
+"""
+
+
+
+import sys
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
+
+evalset = ['1J2X_A_18_B', '1GUX_B_9_E', '1LB6_A_9_B', '1OAI_A_9_B', '1SQK_A_25_B', '1WKW_A_20_B', '2G30_A_16_P', '2HPL_A_5_B', '2NM1_A_17_B', '2OKR_A_24_C', '2PEH_A_10_C', '2PUY_B_10_E', '2PV1_A_7_B', '2QN6_A_18_C', '2QOS_C_11_A', '3D9U_A_6_B', '3H8A_A_28_E', '3HBV_P_7_Z', '3LU9_B_25_C', '3MHP_A_26_C', '3O37_A_10_E', '3PLV_A_21_C', '4K0U_A_15_B', '4M5S_A_10_B', '4Q5U_A_24_C', '4QJA_A_10_P', '5CRW_A_11_B', '5EPP_A_15_B', '5FZT_A_23_B']
+
+def find_file(directory, pattern):
+    for file in os.listdir(directory):
+        if pattern in file:
+            return True
+    return False
+
+def prepinferece(basepath):
+    curdir = os.getcwd()
+    for index, elem in enumerate(evalset):
+        infpath = '/home2/escho/pros/inf_results'
+        os.chdir(infpath)
+        os.system(f'echo {infpath}; ls fixed-reduce | wc -l')
+        if not find_file(infpath, 'correctlist'):
+            os.system('awk -F\',\' \'{if ($2 >= 0.8) print $1}\' dockQ_results_sorted.csv > correctlist')
+        if find_file(os.path.join(infpath, 'fixed-reduce'), 'crt'):
+            print(f'crt found in {infpath}/fixed-reduce')
+            continue
+        defiles = [x for x in os.listdir(infpath) if ".pdb" in x and not "-if" in x]
+        for index, file in enumerate(defiles):
+            if os.system(f'grep {file} correctlist') == 0:
+                os.system(f'mv {file} {file[:-3]}crt.pdb')
+        os.system(f'mkdir fixed-reduce')
+
+def plot_performance(metrics, labels, title, ylabel, save_path):
+    for metric, label in zip(metrics, labels):
+        plt.plot(metric, label=label)
+    plt.title(title)
+    plt.xlabel('Rank')
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.savefig(save_path)
+    plt.close()
+
+def load_metrics(file_path):
+    with open(file_path, 'r') as f:
+        lines = f.readlines()
+    metrics = [float(line.strip()) for line in lines]
+    return metrics
+
+if __name__ == "__main__":
+    baseinfapath = '/rv2/biodata/pep_dataset/'
+    paramfilepath = '/home/jsp/pros/peprank/model/2024-10-24T12:47.pth.tar'
+    if len(sys.argv) > 2:
+        baseinfpath = sys.argv[1]
+    if len(sys.argv) > 3:
+        paramfilepath = sys.argv[2]
+
+    graph_xmax = 1000
+
+    curdir = os.getcwd()
+    infpath = os.path.join(curdir, 'inf_results_2024-10-24T12:47')
+    results = [x for x in os.listdir(infpath) if os.path.isdir(os.path.join(infpath, x))]
+    n_datasets = len(results)
+    print(n_datasets)
+    board = [[0] * graph_xmax for _ in range(n_datasets)]
+    board2 = [[0] * graph_xmax for _ in range(n_datasets)]
+
+    for i in range(n_datasets):
+        sor = os.path.join(infpath, results[i], 'predictions_sorted.txt')
+        print("sor: ", sor)
+        with open(sor, 'r') as file:
+            lines = file.read().split('\n')
+        samesame = 0
+        previous = float(lines[0].split('\t')[1])
+        ind = 0
+        for line in lines:
+            if line.strip() == '':
+                continue
+            score = float(line.split('\t')[1])
+            if score == previous:
+                samesame += 1
+            else:
+                samesame = 0
+            previous = score
+            rank = ind + 1 - samesame
+            board[i][rank - 1] = score
+            ind += 1
+
+    avg_board = np.mean(board, axis=0)
+    plt.plot(range(1, graph_xmax + 1), avg_board)
+    plt.title('Average Score by Rank')
+    plt.xlabel('Rank')
+    plt.ylabel('Score')
+    plt.savefig('average_score_by_rank.png')
+    plt.close()

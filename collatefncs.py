@@ -4,7 +4,7 @@ import os
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
-from commonfncs import get_atom_feature
+from test_20241118commonfncs import get_atom_feature
 from scipy.spatial import distance_matrix
 from Bio.PDB import *
 

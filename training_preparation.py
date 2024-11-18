@@ -11,8 +11,8 @@ from scipy.spatial import distance_matrix
 import multiprocessing as mp
 
 from extract_interface import *
-from commonfncs import get_atom_feature_f
-from commonfncs import atom_feature
+from test_20241118commonfncs import get_atom_feature_f
+from test_20241118commonfncs import atom_feature
 
 input_path = '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb'
 gNpzdir = '/home2/escho/pros/npz-eas'
@@ -20,7 +20,7 @@ Y = np.array([1.0])
 recifext = ".rec-if.pdb"
 ligifext = ".lig-if.pdb"
 
-def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = False):
+def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = False, include_implicitvalence=True, include_elecneg=True):
     global input_path
     global Y
 
@@ -66,9 +66,10 @@ def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = False):
     try:
         receptor_count = receptor_mol.GetNumAtoms()
         ligand_count = ligand_mol.GetNumAtoms()
-        receptor_feature = atom_feature(receptor_mol, include_implicitvalence=True, include_elecneg=True)
-        ligand_feature = atom_feature(ligand_mol, include_implicitvalence=True, include_elecneg=True)
-        #print(receptor_feature.shape, ligand_feature.shape)
+        #receptor_feature = atom_feature(receptor_mol, include_implicitvalence=True, include_elecneg=True)
+        #ligand_feature = atom_feature(ligand_mol, include_implicitvalence=True, include_elecneg=True)
+        receptor_feature = atom_feature(receptor_mol, include_implicitvalence=include_implicitvalence, include_elecneg=include_elecneg)
+        ligand_feature = atom_feature(ligand_mol, include_implicitvalence=include_implicitvalence, include_elecneg=include_elecneg)
 
         # get receptor adj matrix
         c1 = receptor_mol.GetConformers()[0]
