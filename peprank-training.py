@@ -42,7 +42,7 @@ def train_model(model, train_dataloader, optimizer, loss_fn, device, include_imp
         batch_size = H.size(0)
 
         pred = model((H.to(device), A1.to(device), A2.to(device), V.to(device), Atom_count.to(device)), device)
-        Y = Y.view(-1) #add 4
+        Y = Y.view(-1)  # Y 텐서의 크기를 pred 텐서의 크기와 일치시킴
         loss = loss_fn(pred, Y.to(device))
         Loss.update(loss.item(), batch_size)
         if acc_loss == 0:
@@ -58,7 +58,7 @@ def train_model(model, train_dataloader, optimizer, loss_fn, device, include_imp
         if (batch_idx + 1) % 100 == 0:
             print(f"Batch {batch_idx} ended at ", time.time() - t)
 
-    return Loss.avg 
+    return Loss.avg
 
 def verifynpzfiles(filelist):
     for file in filelist:
