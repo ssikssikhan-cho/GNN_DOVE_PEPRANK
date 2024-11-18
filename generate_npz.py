@@ -11,7 +11,7 @@ from scipy.spatial import distance_matrix
 import multiprocessing as mp
 
 from extract_interface import *
-from commonfncs import get_atom_feature
+from test_20241118commonfncs import get_atom_feature
 
 
 input_path = ''

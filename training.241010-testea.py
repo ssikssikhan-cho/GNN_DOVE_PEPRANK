@@ -12,7 +12,7 @@ import numpy as np
 import datetime
 from argparser import argparser
 from ea_gnn import GNN_EA, npzdataset
-from commonfncs import getatomfeaturelen
+from test_20241118commonfncs import getatomfeaturelen
 from collatefncs import collate_fn_orgA2
 
 class AverageMeter(object):
