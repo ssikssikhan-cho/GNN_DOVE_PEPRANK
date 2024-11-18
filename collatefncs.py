@@ -48,9 +48,10 @@ def collate_fn_orgA2(batch):
 """
 def collate_fn_orgA2(batch):
     max_natom = max([sample['H'].shape[0] for sample in batch])
-    feat_dim = batch[0]['H'].shape[1]  # 첫 번째 샘플의 특징 벡터 크기를 사용하여 feat_dim 설정
-    
-    H = torch.zeros((len(batch), max_natom, feat_dim), dtype=torch.float32)
+    #eat_dim = batch[0]['H'].shape[1]  # 첫 번째 샘플의 특징 벡터 크기를 사용하여 feat_dim 설정
+    max_feat_dim = max([sample['H'].shape[1] for sample in batch])
+
+    H = torch.zeros((len(batch), max_natom, max_feat_dim), dtype=torch.float32)
     A1 = torch.zeros((len(batch), max_natom, max_natom), dtype=torch.float32)
     A2 = torch.zeros((len(batch), max_natom, max_natom), dtype=torch.float32)
     V = torch.zeros((len(batch), max_natom), dtype=torch.float32)
@@ -59,7 +60,8 @@ def collate_fn_orgA2(batch):
     
     for i in range(len(batch)):
         natom = batch[i]['H'].shape[0]
-        
+        feat_dim = batch[0]['H'].shape[1]
+
         H[i, :natom, :feat_dim] = torch.tensor(batch[i]['H'], dtype=torch.float32)
         A1[i, :natom, :natom] = torch.tensor(batch[i]['A1'], dtype=torch.float32)
         A2[i, :natom, :natom] = torch.tensor(batch[i]['A2'], dtype=torch.float32)
