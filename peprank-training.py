@@ -42,6 +42,7 @@ def train_model(model, train_dataloader, optimizer, loss_fn, device, include_imp
         batch_size = H.size(0)
 
         pred = model((H.to(device), A1.to(device), A2.to(device), V.to(device), Atom_count.to(device)), device)
+        Y = Y.view(-1) #add 4
         loss = loss_fn(pred, Y.to(device))
         Loss.update(loss.item(), batch_size)
         if acc_loss == 0:
