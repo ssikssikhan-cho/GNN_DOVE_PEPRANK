@@ -68,8 +68,8 @@ def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = False, incl
         ligand_count = ligand_mol.GetNumAtoms()
         #receptor_feature = atom_feature(receptor_mol, include_implicitvalence=True, include_elecneg=True)
         #ligand_feature = atom_feature(ligand_mol, include_implicitvalence=True, include_elecneg=True)
-        receptor_feature = atom_feature(receptor_mol, include_implicitvalence=include_implicitvalence, include_elecneg=include_elecneg)
-        ligand_feature = atom_feature(ligand_mol, include_implicitvalence=include_implicitvalence, include_elecneg=include_elecneg)
+        receptor_feature = np.array([atom_feature(receptor_mol, atom_i, include_implicitvalence=include_implicitvalence, include_elecneg=include_elecneg) for atom_i in range(receptor_count)])
+        ligand_feature = np.array([atom_feature(ligand_mol, atom_i, include_implicitvalence=include_implicitvalence, include_elecneg=include_elecneg) for atom_i in range(ligand_count)])
 
         # get receptor adj matrix
         c1 = receptor_mol.GetConformers()[0]
