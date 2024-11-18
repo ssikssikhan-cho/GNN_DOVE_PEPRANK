@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     #list_posfile = []
     #list_negfile = []
-    path = '/home2/escho/GNN_DOVE_PEPRANK/npz-eas'
+    path = '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb/npz-eas/'
     list_posfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
     list_negfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
 
