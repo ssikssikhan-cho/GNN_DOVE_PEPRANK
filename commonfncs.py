@@ -29,11 +29,13 @@ def atom_feature(m, atom_i, include_implicitvalence=True, include_elecneg=True):
     if include_implicitvalence:
         features += one_hot_encoding(atom.GetImplicitValence(), t_impval)
 
-    features.append(atom.GetIsAromatic())
+    #features.append(atom.GetIsAromatic())
 
     if include_elecneg:
-        features.append(elecneg[atsym if (atsym in t_atom_dti) else t_atom_dti[-1]])
-
+        elecneg_value = elecneg.get(atsym, elecneg["Xx"])
+        features.append(elecneg_value)
+        #features.append(elecneg[atsym if (atsym in t_atom_dti) else t_atom_dti[-1]])
+    features.append(atom.GetIsAromatic())
     return np.array(features)
 
 def featurize(m, atom_i,include_implicitvalence=True, include_elecneg=True):

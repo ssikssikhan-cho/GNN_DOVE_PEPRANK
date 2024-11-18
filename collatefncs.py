@@ -10,7 +10,7 @@ from Bio.PDB import *
 
 import biographs as bg
 import networkx as nx
-
+"""
 def collate_fn_orgA2(batch):
     max_natoms = max([len(item['H']) for item in batch if item is not None])
     #for item in batch:
@@ -45,6 +45,29 @@ def collate_fn_orgA2(batch):
     Atoms_Number=torch.Tensor(Atoms_Number)
 
     return H, A1, A2, V, Atoms_Number, Y 
+"""
+def collate_fn_orgA2(batch):
+    max_natom = max([sample['H'].shape[0] for sample in batch])
+    feat_dim = batch[0]['H'].shape[1]  # 첫 번째 샘플의 특징 벡터 크기를 사용하여 feat_dim 설정
+    
+    H = torch.zeros((len(batch), max_natom, feat_dim), dtype=torch.float32)
+    A1 = torch.zeros((len(batch), max_natom, max_natom), dtype=torch.float32)
+    A2 = torch.zeros((len(batch), max_natom, max_natom), dtype=torch.float32)
+    V = torch.zeros((len(batch), max_natom), dtype=torch.float32)
+    Y = torch.zeros((len(batch), 1), dtype=torch.float32)
+    Atom_count = torch.zeros(len(batch), dtype=torch.int)
+    
+    for i in range(len(batch)):
+        natom = batch[i]['H'].shape[0]
+        
+        H[i, :natom, :feat_dim] = torch.tensor(batch[i]['H'], dtype=torch.float32)
+        A1[i, :natom, :natom] = torch.tensor(batch[i]['A1'], dtype=torch.float32)
+        A2[i, :natom, :natom] = torch.tensor(batch[i]['A2'], dtype=torch.float32)
+        V[i, :natom] = torch.tensor(batch[i]['V'], dtype=torch.float32)
+        Y[i] = torch.tensor(batch[i]['Y'], dtype=torch.float32)
+        Atom_count[i] = natom
+    
+    return H, A1, A2, V, Atom_count, Y
 
 def collate_genA2(batch):
     max_natoms = max([len(item['H']) for item in batch if item is not None])
