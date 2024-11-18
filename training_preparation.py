@@ -15,7 +15,7 @@ from test_20241118commonfncs import get_atom_feature_f
 from test_20241118commonfncs import atom_feature
 
 input_path = '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb'
-gNpzdir = '/home2/escho/pros/npz-eas'
+gNpzdir = '/home2/escho/GNN_DOVE_PEPRANK/npz-eas'
 Y = np.array([1.0]) 
 recifext = ".rec-if.pdb"
 ligifext = ".lig-if.pdb"

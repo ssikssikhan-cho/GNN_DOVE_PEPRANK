@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc
 
 # 예측 결과 파일 경로 설정
-predictions_path = '/home2/escho/pros/inf_results/predictions_sorted.txt'  # 여기에 예측 결과 파일 경로를 입력
+predictions_path = '/home2/escho/GNN_DOVE_PEPRANK/inf_results/predictions_sorted.txt'  # 여기에 예측 결과 파일 경로를 입력
 
 # y_true와 y_scores 리스트 생성
 y_true = []  # 실제 레이블 (1 또는 0)
@@ -33,5 +33,5 @@ plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('ROC Curve')
 plt.legend(loc="lower right")
-plt.savefig('/home2/escho/pros/roc_curve.png')
+plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/roc_curve.png')
 plt.show()

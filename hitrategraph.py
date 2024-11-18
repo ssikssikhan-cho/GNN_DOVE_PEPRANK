@@ -214,7 +214,7 @@ def find_file(directory, pattern):
 def prepinferece(basepath):
     curdir = os.getcwd()
     for index, elem in enumerate(evalset):
-        infpath = '/home2/escho/pros/inf_results'
+        infpath = '/home2/escho/GNN_DOVE_PEPRANK/inf_results'
         os.chdir(infpath)
         os.system(f'echo {infpath}; ls fixed-reduce | wc -l')
         if not find_file(infpath, 'correctlist'):

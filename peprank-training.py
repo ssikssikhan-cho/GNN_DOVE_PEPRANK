@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
     #list_posfile = []
     #list_negfile = []
-    path = '/home2/escho/pros/npz-eas/'
+    path = '/home2/escho/GNN_DOVE_PEPRANK/npz-eas'
     list_posfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
     list_negfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
 
@@ -142,8 +142,8 @@ if __name__ == "__main__":
     loss_list = []
     best_acc = 0
     n_epoch = 20
-    os.system('mkdir -p /home2/escho/pros/chkpts 2> /dev/null')
-    os.system('mkdir -p /home2/escho/pros/model 2> /dev/null')
+    os.system('mkdir -p /home2/escho/GNN_DOVE_PEPRANK/chkpts 2> /dev/null')
+    os.system('mkdir -p /home2/escho/GNN_DOVE_PEPRANK/model 2> /dev/null')
     sdatetime = str(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M'))
 
     print(model)
@@ -170,8 +170,8 @@ if __name__ == "__main__":
         if k % 5 == 0:
             torch.save( {'epoch': k, 'state_dict': model.state_dict(),
                 'loss': train_loss, 'best_roc': best_acc, 'optimizer': optimizer.state_dict(),
-                }, f'/home2/escho/pros/chkpts/model{sdatetime}-{k}.pt')
+                }, f'/home2/escho/GNN_DOVE_PEPRANK/chkpts/model{sdatetime}-{k}.pt')
 
-    path = f'/home2/escho/pros/model/{sdatetime}.pth.tar'
+    path = f'/home2/escho/GNN_DOVE_PEPRANK/model/{sdatetime}.pth.tar'
     print(f'Training finished, params saved as {path}.')
     torch.save(model.state_dict(), path)

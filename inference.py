@@ -14,13 +14,13 @@ import torch.nn as nn
 from argparser import argparser
 from test_20241118commonfncs import getatomfeaturelen, getatomfeaturelen_f
 
-npzdirpf = '/home2/escho/pros/npz-nf'
+npzdirpf = '/home2/escho/GNN_DOVE_PEPRANK/npz-nf'
 
 def inference_dir(params):
     global npzdirpf
 
     input_path = os.path.abspath(params['F']) if params['F'] else '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb'
-    save_path = '/home2/escho/pros/inf_results'
+    save_path = '/home2/escho/GNN_DOVE_PEPRANK/inf_results'
     os.system(f'mkdir -p {save_path}')
     save_path = os.path.join(save_path, input_path.split('/')[-1])
     os.system(f'mkdir -p {save_path}')
