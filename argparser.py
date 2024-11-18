@@ -16,6 +16,8 @@ def argparser():
     parser.add_argument('--parampath',help='model param file path for infernce',type=str,default=None)
     parser.add_argument('--maxfnum', help='Max # of files used for eval/train', type=int, default = 100000)
     parser.add_argument('--n_epochs', help='', type=int, default = 40)
+    parser.add_argument('--include_implicitvalence', help='Include implicit valence feature', action='store_true')
+    parser.add_argument('--include_elecneg', help='Include electronegativity feature', action='store_true')
     args = parser.parse_args()
     params = vars(args)
     return params
