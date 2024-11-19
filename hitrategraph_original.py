@@ -81,37 +81,42 @@ if __name__ == '__main__':
         previous = float(lines[0].split('\t')[1])
         ind = 0
         for k in range(1, graph_xmax):
-            
-            score = float(lines[k].split('\t')[1])
-            #print('previous: ', previous)
-            #print('score: ', score)
-            if score != previous:
-                samesame += 1
-            previous = score
-            board2[i][k] = samesame
+            if len(lines[k].split('\t')) > 1:
+                score = float(lines[k].split('\t')[1])
+                #print('previous: ', previous)
+                #print('score: ', score)
+                if score != previous:
+                    samesame += 1
+                previous = score
+                board2[i][k] = samesame
         #print(f'board2[{i}]: ', board[i])
-        
+            else:
+                print(f"Skipping invalid line (not enough columns): {lines[k]}")
+                continue  # 두 번째 항목이 없는 경우 건너뛰기
         for k in range(graph_xmax):
-            
-            score = float(lines[k].split('\t')[1])
-            name = lines[k].split('\t')[0]
-                
-            # if there is one hit in group, after that rank is always hit.
-            if 'crt' in name:
-                print(name, score, k)
-                # find the first same rank
-                for j in range(1,graph_xmax):
-                    if board2[i][k] == board2[i][j]:
-                        # print(board2[i][k] , board2[i][j])
-                        ind = board2[i][j]
-                        print('ind: ', ind)
-                        break
-                # print("the index: ", ind)
-                # first rank to ~
-                for c in range(ind, graph_xmax):
-                    board[i][c] = 1
-                
-                break
+            if len(lines[k].split('\t')) > 1:
+                score = float(lines[k].split('\t')[1])
+                name = lines[k].split('\t')[0]
+                    
+                # if there is one hit in group, after that rank is always hit.
+                if 'crt' in name:
+                    print(name, score, k)
+                    # find the first same rank
+                    for j in range(1,graph_xmax):
+                        if board2[i][k] == board2[i][j]:
+                            # print(board2[i][k] , board2[i][j])
+                            ind = board2[i][j]
+                            print('ind: ', ind)
+                            break
+                    # print("the index: ", ind)
+                    # first rank to ~
+                    for c in range(ind, graph_xmax):
+                        board[i][c] = 1
+                    
+                    break
+            else:
+                print(f"Skipping invalid line (not enough columns): {lines[k]}")
+                continue  # 두 번째 항목이 없는 경우 건너뛰기
         #print(f'board[{i}]: ', board[i])
 
     print(board2[0])
