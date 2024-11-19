@@ -46,7 +46,7 @@ def genpredictedscores(basepath, parampath):
         os.system(f'python inference.py -F {infpath}/fixed-reduce/ --parampath {parampath} --gpu \'2\'')
         os.system(f'mv inf_results/fixed-reduce ' + os.path.join('inf_results', elem))
 
-"""
+
 if __name__ == '__main__':
     #baseinfapath = '/rv2/biodata/pep_dataset/'
     paramfilepath = '/home2/escho/GNN_DOVE_PEPRANK/model/2024-11-19T12:54.pth.tar'
@@ -241,3 +241,4 @@ if __name__ == '__main__':
     print(f"Area under the curve: {area}")
     plt.text(0.5, 0.8, f'Area: {area:.2f}', fontsize=12, color='black', ha='center')
     plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/inf_results/middle/hitrate_ea.png')
+"""
