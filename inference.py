@@ -75,9 +75,9 @@ def inference_dir(params):
     #os.system("mkdir " + os.path.join(input_path, npzdirpf)+" 2> /dev/null")
     for item in listfiles:
         input_pdb_path=os.path.join(input_path,item)
-        input_file = generate_npz_file(input_pdb_path, npzdirpf='npz-nf', newfeat = True, forcenpzgen=True,
+        input_file = generate_npz_file(input_pdb_path, npzdirpf='npz-nf', forcenpzgen=True,
                                        include_implicitvalence=params['include_implicitvalence'],
-                                       include_elecneg=params['include_elecneg'])
+                                       include_elecneg=params['include_elecneg']) #delete newfeat = True parameter
         #input_file = generate_npz_file(input_pdb_path, npzdirpf=npzdirpf)
         if None != input_file:
             Input_File_List.append(input_file)
