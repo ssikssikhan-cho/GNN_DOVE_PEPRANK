@@ -75,6 +75,8 @@ if __name__ == '__main__':
         print("sor: ",sor)
         with open(sor,'r') as file:
             lines = file.read().split('\n')
+        lines = [line for line in lines if not line.startswith('Input')]
+        
         samesame = 0
         previous = float(lines[0].split('\t')[1])
         ind = 0
