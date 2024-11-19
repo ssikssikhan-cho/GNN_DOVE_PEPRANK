@@ -3,8 +3,8 @@
 import os
 import shutil
 import numpy as np
-from generate_npz import generate_npz_file
-#from training_preparation import generate_npz_file
+#from generate_npz import generate_npz_file
+from training_preparation import generate_npz_file
 from ea_gnn import GNN_EA, npzdataset
 import torch
 from collatefncs import collate_fn_orgA2
