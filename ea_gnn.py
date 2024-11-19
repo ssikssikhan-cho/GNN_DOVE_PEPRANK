@@ -71,9 +71,9 @@ class mlGAT(nn.Module):
         return retval
         
 class GNN_EA(nn.Module):
-    def __init__(self, n_atom_features = 35, n_heads = 3, n_gat_layers = 4, dim_gat_feat = 70, 
+    def __init__(self, n_atom_features = 29, n_heads = 3, n_gat_layers = 4, dim_gat_feat = 70, 
                  dim_fcl_feat = 64, n_fcl = 4, dropout = 0.3, mu_init = 0., dev_init = 1.,
-                 int_cutoff = 10):
+                 int_cutoff = 10): # natom = 35 default
         super(GNN_EA, self).__init__()
 
         self.cutoff = int_cutoff
