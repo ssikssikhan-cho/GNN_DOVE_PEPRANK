@@ -19,7 +19,7 @@ npzdirpf = '/home2/escho/GNN_DOVE_PEPRANK/npz-nf'
 def inference_dir(params):
     global npzdirpf
 
-    input_path = os.path.abspath(params['F']) if params['F'] else '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb'
+    input_path = os.path.abspath(params['F']) if params['F'] else '/mnt/rv1/althome/escho/training_dataset/middle/'
     save_path = '/home2/escho/GNN_DOVE_PEPRANK/inf_results'
     os.system(f'mkdir -p {save_path}')
     save_path = os.path.join(save_path, input_path.split('/')[-1])
@@ -31,10 +31,11 @@ def inference_dir(params):
     model_path = params['parampath']
     #model_path = "model/2024-10-15T21:09.pth.tar"
     chkpts = True if 'chkpts' in  model_path else False
-    model = GNN_EA(getatomfeaturelen(True))
-    #model = GNN_EA(getatomfeaturelen_f(), n_heads=params['n_heads'],
-    #               n_gat_layers = params['n_gat_layers'], dim_gat_feat = params['n_gat_layers'], 
-    #               dim_fcl_feat = params['dim_fcl_feat'], n_fcl = params['n_fcl'])
+    #model = GNN_EA(getatomfeaturelen(True))
+    model = GNN_EA(getatomfeaturelen_f(), n_heads=params['n_heads'],
+                   n_gat_layers = params['n_gat_layers'], dim_gat_feat = params['n_gat_layers'], 
+                   dim_fcl_feat = params['dim_fcl_feat'], n_fcl = params['n_fcl'],
+                   dropout=params['dropout'])
 
     # Check if "module key" is present in the state_dict and/or a checkpoint
     state_dict = torch.load(model_path)
