@@ -169,7 +169,7 @@ if __name__ == '__main__':
         ind = 0
         
         for k in range(1, graph_xmax):
-            if len(lines[k].split('\t')) > 1:
+            if k < len(lines) and len(lines[k].split('\t')) > 1:
                 score = float(lines[k].split('\t')[1])
                 #print('previous: ', previous)
                 #print('score: ', score)
