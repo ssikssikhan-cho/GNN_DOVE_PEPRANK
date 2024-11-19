@@ -46,7 +46,7 @@ def genpredictedscores(basepath, parampath):
         os.system(f'python inference.py -F {infpath}/fixed-reduce/ --parampath {parampath} --gpu \'2\'')
         os.system(f'mv inf_results/fixed-reduce ' + os.path.join('inf_results', elem))
 
-
+"""
 if __name__ == '__main__':
     #baseinfapath = '/rv2/biodata/pep_dataset/'
     paramfilepath = '/home2/escho/GNN_DOVE_PEPRANK/model/2024-11-19T12:54.pth.tar'
@@ -127,6 +127,107 @@ if __name__ == '__main__':
     plt.ylim(0,1.05)
     plt.plot(c, color = 'r', label = 'GNN_EA w/ 71K dataset')
     #plt.plot(e, color = 'b', label = 'atom')
+    ax = plt.gca()
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=10))
+
+    plt.xlabel("Top Rank Considered")
+    plt.ylabel("Hit Rate")
+    plt.title("Train Code validation TT")
+    plt.legend()
+
+    # 그래프의 선 아래 면적 계산
+    area = np.trapz(c, dx=1)
+    print(f"Area under the curve: {area}")
+    plt.text(0.5, 0.8, f'Area: {area:.2f}', fontsize=12, color='black', ha='center')
+    plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/inf_results/middle/hitrate_ea.png')
+"""
+
+
+if __name__ == '__main__':
+    # 기본 경로 설정
+    paramfilepath = '/home2/escho/GNN_DOVE_PEPRANK/model/2024-11-19T12:54.pth.tar'
+    if len(sys.argv) > 2:
+        baseinfpath = sys.argv[1]
+    if len(sys.argv) > 3:    
+        paramfilepath = sys.argv[2]
+
+    graph_xmax = 999
+
+    # 경로 설정
+    infpath = "/home2/escho/GNN_DOVE_PEPRANK/inf_results/"
+    results = [x for x in os.listdir(infpath) if os.path.isdir(os.path.join(infpath, x))]
+    n_datasets = len(results)
+    print(f"Number of datasets: {n_datasets}")
+
+    # 보드 초기화
+    board = [[0] * graph_xmax for _ in range(n_datasets)]
+    board2 = [[0] * graph_xmax for _ in range(n_datasets)]
+    
+    for i in range(n_datasets):
+        sor = os.path.join(infpath, results[i], 'predictions_sorted.txt')
+        print("sor: ", sor)
+
+        with open(sor, 'r') as file:
+            lines = file.read().split('\n')
+
+        samesame = 0
+        previous = float(lines[0].split('\t')[1])
+        ind = 0
+        
+        # 첫 번째 루프: 동일한 점수 처리
+        for k in range(1, graph_xmax):
+            parts = lines[k].split('\t', 1)  # 첫 번째 탭 기준으로만 분리
+            if len(parts) < 2:
+                print(f"Skipping invalid line (not enough columns): {lines[k]}")
+                continue
+
+            score = float(parts[1])  # 두 번째 값은 score로 변환
+            if score != previous:
+                samesame += 1
+            previous = score
+            board2[i][k] = samesame
+
+        # 두 번째 루프: "crt" 문자열이 포함된 경우 처리
+        for k in range(graph_xmax):
+            parts = lines[k].split('\t', 1)  # 첫 번째 탭 기준으로만 분리
+            if len(parts) < 2:
+                print(f"Skipping invalid line (not enough columns): {lines[k]}")
+                continue
+
+            score = float(parts[1])
+            name = parts[0]
+
+            # "crt" 문자열이 있는 경우
+            if 'crt' in name:
+                print(name, score, k)
+                for j in range(1, graph_xmax):
+                    if board2[i][k] == board2[i][j]:
+                        ind = board2[i][j]
+                        print('ind: ', ind)
+                        break
+                
+                # 첫 번째 같은 순위부터 ~
+                for c in range(ind, graph_xmax):
+                    board[i][c] = 1
+                break
+
+    # 결과 출력
+    print(board2[0])
+    print(board[0])
+    b = np.array(board)
+    c = np.sum(b, axis=0)
+    print('c: ', c)
+    c = c / n_datasets
+    x = np.arange(0, graph_xmax, 5)
+    print(c)
+
+    # 그래프 그리기
+    plt.figure(linewidth=5)
+    plt.xlim(-0.5, graph_xmax - 1)
+    plt.xticks(x)
+    plt.ylim(0, 1.05)
+    plt.plot(c, color='r', label='GNN_EA w/ 71K dataset')
+
     ax = plt.gca()
     ax.xaxis.set_major_locator(MaxNLocator(nbins=10))
 
