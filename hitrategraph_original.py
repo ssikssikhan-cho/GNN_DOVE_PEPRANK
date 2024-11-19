@@ -182,7 +182,7 @@ if __name__ == '__main__':
                 print(f"잘못된 라인 건너뜀 (인덱스 {k}): {lines[k] if k < len(lines) else '범위를 초과한 인덱스'}")
                 continue  # 두 번째 항목이 없는 경우 건너뛰기
         for k in range(graph_xmax):
-            if len(lines[k].split('\t')) > 1:
+            if k < len(lines) and len(lines[k].split('\t')) > 1:
                 score = float(lines[k].split('\t')[1])
                 name = lines[k].split('\t')[0]
                     
@@ -203,7 +203,7 @@ if __name__ == '__main__':
                     
                     break
             else:
-                print(f"Skipping invalid line (not enough columns): {lines[k]}")
+                print(f"잘못된 라인 건너뜀 (인덱스 {k}): {lines[k] if k < len(lines) else '범위를 초과한 인덱스'}")
                 continue  # 두 번째 항목이 없는 경우 건너뛰기
         #print(f'board[{i}]: ', board[i])
 
