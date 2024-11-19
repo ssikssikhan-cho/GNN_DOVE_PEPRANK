@@ -1,5 +1,5 @@
 # Copyright 2024 Joon-Sang Park. All Rights Reserved.
- 
+
 import sys
 import os
 import shutil
@@ -69,7 +69,8 @@ if __name__ == '__main__':
     # the board
     board = [[0] * graph_xmax for _ in range(n_datasets)]
     board2 = [[0] * graph_xmax for _ in range(n_datasets)]
-
+    
+    """
     for i in range(n_datasets):
         sor = os.path.join(infpath, results[i], 'predictions_sorted.txt')
         print(f"Processing file: {sor}")
@@ -150,7 +151,7 @@ if __name__ == '__main__':
     print(f"Area under the curve: {area}")
     plt.text(0.5, 0.8, f'Area: {area:.2f}', fontsize=12, color='black', ha='center')
     plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/inf_results/middle/hitrate_ea.png')
-    
+
     """
     # # for every txt files
     for i in range(n_datasets):
@@ -233,4 +234,3 @@ if __name__ == '__main__':
     print(f"Area under the curve: {area}")
     plt.text(0.5, 0.8, f'Area: {area:.2f}', fontsize=12, color='black', ha='center')
     plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/inf_results/middle/hitrate_ea.png')
-    """
