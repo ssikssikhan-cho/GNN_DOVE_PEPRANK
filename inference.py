@@ -31,12 +31,12 @@ def inference_dir(params):
     model_path = params['parampath']
     #model_path = "model/2024-10-15T21:09.pth.tar"
     chkpts = True if 'chkpts' in  model_path else False
-    
+
     feature_len = getatomfeaturelen_f()
     print(f"Feature vector length: {feature_len}")
     #model = GNN_EA(getatomfeaturelen(True))
     model = GNN_EA(feature_len, n_heads=params['n_heads'],
-                   n_gat_layers = params['n_gat_layers'], dim_gat_feat = params['n_gat_layers'], 
+                   n_gat_layers = params['n_gat_layers'], dim_gat_feat = params['dim_gat_feat'], 
                    dim_fcl_feat = params['dim_fcl_feat'], n_fcl = params['n_fcl'],
                    dropout=params['dropout'])
 
