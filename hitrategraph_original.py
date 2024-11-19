@@ -59,8 +59,9 @@ if __name__ == '__main__':
 #    exit()
     graph_xmax = 1000
 
-    curdir = os.getcwd()
-    infpath = os.path.join(curdir, 'inf_results/middle')
+    #curdir = os.getcwd()
+    #infpath = os.path.join(curdir, 'inf_results/middle/')
+    infpath="/home2/escho/GNN_DOVE_PEPRANK/inf_results/"
     results=[x for x in os.listdir(infpath) if os.path.isdir(os.path.join(infpath, x))]
     n_datasets = len(results)
     print(n_datasets)
@@ -137,4 +138,4 @@ if __name__ == '__main__':
     area = np.trapz(c, dx=1)
     print(f"Area under the curve: {area}")
     plt.text(0.5, 0.8, f'Area: {area:.2f}', fontsize=12, color='black', ha='center')
-    plt.savefig('hitrate_ea.png')
+    plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/inf_results/middle/hitrate_ea.png')
