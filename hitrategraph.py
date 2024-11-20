@@ -84,6 +84,12 @@ if __name__ == '__main__':
 
         with open(sor,'r') as file:
             lines = file.read().split('\n')
+            
+        # 첫 번째 요소가 비어 있거나 예상한 형식이 아닌 경우를 처리
+        if len(lines[0].split()) < 2:
+            print(f"Line 0 is malformed: {lines[0]}")
+            continue
+
         samesame = 0
         previous = float(lines[0].split('\t')[1])
         ind = 0
