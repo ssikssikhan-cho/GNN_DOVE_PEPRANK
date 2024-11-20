@@ -77,9 +77,9 @@ if __name__ == '__main__':
         
         sor = os.path.join(infpath, results[i], 'predictions_sorted_updated.txt')
         print("sor: ",sor)
-        if not os.path.exists(sor):
-            print(f"File not found: {sor}")
-            continue  # Skip this iteration if the file does not exist
+        #if not os.path.exists(sor):
+        #    print(f"File not found: {sor}")
+        #    continue  # Skip this iteration if the file does not exist
 
 
         with open(sor,'r') as file:
@@ -88,10 +88,10 @@ if __name__ == '__main__':
         previous = float(lines[0].split('\t')[1])
         ind = 0
         for k in range(1, graph_xmax):
-            line_parts = lines[k].split('\t')
-            if len(line_parts) < 2:
-                print(f"Line {k} is malformed: {lines[k]}")
-                continue  # Skip this iteration if the line is malformed
+            #line_parts = lines[k].split('\t')
+            #if len(line_parts) < 2:
+            #    print(f"Line {k} is malformed: {lines[k]}")
+            #    continue  # Skip this iteration if the line is malformed
             
             score = float(lines[k].split('\t')[1])
             #print('previous: ', previous)
@@ -103,16 +103,16 @@ if __name__ == '__main__':
         #print(f'board2[{i}]: ', board[i])
         
         for k in range(graph_xmax):
-            line_parts = lines[k].split('\t')
-            if len(line_parts) < 2:
-                print(f"Line {k} is malformed: {lines[k]}")
-                continue  # Skip this iteration if the line is malformed
+            #line_parts = lines[k].split('\t')
+            #if len(line_parts) < 2:
+            #    print(f"Line {k} is malformed: {lines[k]}")
+            #    continue  # Skip this iteration if the line is malformed
             
-            #score = float(lines[k].split('\t')[1])
-            #name = lines[k].split('\t')[0]
+            score = float(lines[k].split('\t')[1])
+            name = lines[k].split('\t')[0]
 
-            score = float(line_parts[1])
-            name = line_parts[0]
+            #score = float(line_parts[1])
+            #name = line_parts[0]
                 
             # if there is one hit in group, after that rank is always hit.
             if 'crt' in name:
