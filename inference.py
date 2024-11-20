@@ -104,7 +104,7 @@ def inference_dir(params):
     pred_sort_path=os.path.join(save_path,"predictions_sorted.txt")
     os.system("sort -n -k 2 -r "+pred_path+" >"+pred_sort_path)
 
-
+#여러개의 폴더들을 순회하면서 inference.py 적용
 def apply_inference_to_subfolders(base_path, params):
     subfolders = [f.path for f in os.scandir(base_path) if f.is_dir()]
     

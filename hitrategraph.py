@@ -1,5 +1,4 @@
 # Copyright 2024 Joon-Sang Park. All Rights Reserved.
-"""
 import sys
 import os
 import shutil
@@ -7,8 +6,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 
-evalset = ['1J2X_A_18_B', '1GUX_B_9_E', '1LB6_A_9_B', '1OAI_A_9_B', '1SQK_A_25_B', '1WKW_A_20_B', '2G30_A_16_P', '2HPL_A_5_B', '2NM1_A_17_B', '2OKR_A_24_C', '2PEH_A_10_C', '2PUY_B_10_E', '2PV1_A_7_B', '2QN6_A_18_C', '2QOS_C_11_A', '3D9U_A_6_B', '3H8A_A_28_E', '3HBV_P_7_Z', '3LU9_B_25_C', '3MHP_A_26_C', '3O37_A_10_E', '3PLV_A_21_C', '4K0U_A_15_B', '4M5S_A_10_B', '4Q5U_A_24_C', '4QJA_A_10_P', '5CRW_A_11_B', '5EPP_A_15_B', '5FZT_A_23_B']
-
+#evalset = ['1J2X_A_18_B', '1GUX_B_9_E', '1LB6_A_9_B', '1OAI_A_9_B', '1SQK_A_25_B', '1WKW_A_20_B', '2G30_A_16_P', '2HPL_A_5_B', '2NM1_A_17_B', '2OKR_A_24_C', '2PEH_A_10_C', '2PUY_B_10_E', '2PV1_A_7_B', '2QN6_A_18_C', '2QOS_C_11_A', '3D9U_A_6_B', '3H8A_A_28_E', '3HBV_P_7_Z', '3LU9_B_25_C', '3MHP_A_26_C', '3O37_A_10_E', '3PLV_A_21_C', '4K0U_A_15_B', '4M5S_A_10_B', '4Q5U_A_24_C', '4QJA_A_10_P', '5CRW_A_11_B', '5EPP_A_15_B', '5FZT_A_23_B']
+evalset = ['2WOK_A_5_B',   '4WHT_O_11_o',  '5KRI_B_9_D',   '5TMW_A_9_C',   '6BHI_A_9_B',   '6JH9_A_29_B',  '6RM5_A_8_P',   '7WK8_C_18_B',
+'2WP1_B_10_Q',  '5DK9_B_9_D',   '5KRJ_A_10_C',  '5TMW_B_10_D',  '6BYJ_A_13_G',  '6JJK_A_5_G',   '6ZBT_C_7_F',   '7WKJ_A_9_C',
+'4UYC_A_13_D',  '5DKB_A_10_C',  '5KRJ_B_10_D',  '5U3J_H_29_A',  '6BYJ_D_7_P',   '6QTX_A_8_B',   '6ZBU_A_15_C',  '7YXW_A_11_D'
+'4UYC_B_12_C',  '5DKB_B_10_D',  '5L6N_H_29_L',  '5U3K_H_20_P',  '6J1W_A_9_C',   '6QW4_A_7_P',   '6ZBU_A_16_D', 
+'4V0U_D_20_E',  '5DUG_B_9_D',   '5L7K_A_6_B',   '6BHG_A_9_B',   '6J29_A_9_C',   '6QXF_J_11_K',  '6ZW0_A_26_C', 
+'4WHT_M_12_m',  '5DUH_B_9_D',   '5TMV_B_10_D',  '6BHH_A_10_B',  '6J2A_A_9_C',   '6RL4_A_12_P',  '6ZW0_B_26_C']
 #3RYB_A_9_B, 1UHB_A_9_P zero crrect decoy
 
 # function find out if there is a file corresponding to given pattern in the directory and return true if there is
@@ -21,7 +25,7 @@ def find_file(directory, pattern):
 def prepinferece(basepath):
     curdir = os.getcwd()
     for index, elem in enumerate(evalset):
-        infpath = '/home2/escho/pros/inf_results'
+        infpath = '/home2/escho/GNN_DOVE_PEPRANK/inf_results'
         os.chdir(infpath)
         os.system(f'echo {infpath}; ls fixed-reduce | wc -l')
         if find_file(infpath, 'correctlist') == False:
@@ -48,8 +52,8 @@ def genpredictedscores(basepath, parampath):
 
 
 if __name__ == '__main__':
-    baseinfapath = '/rv2/biodata/pep_dataset/'
-    paramfilepath = '/home/jsp/pros/peprank/model/2024-10-24T12:47.pth.tar'
+    #baseinfapath = '/rv2/biodata/pep_dataset/'
+    paramfilepath = '/home2/escho/GNN_DOVE_PEPRANK/model/2024-11-19T12:54.pth.tar'
     if (len(sys.argv) > 2):
         baseinfpath = sys.argv[1]
     if (len(sys.argv) > 3):    
@@ -60,7 +64,8 @@ if __name__ == '__main__':
     graph_xmax = 1000
 
     curdir = os.getcwd()
-    infpath = os.path.join(curdir, 'inf_results_2024-10-24T12:47')
+    #infpath = os.path.join(curdir, 'inf_results_2024-10-24T12:47')
+    infpath = '/home2/escho/GNN_DOVE_PEPRANK/inf_results/'
     results=[x for x in os.listdir(infpath) if os.path.isdir(os.path.join(infpath, x))]
     n_datasets = len(results)
     print(n_datasets)
@@ -70,7 +75,7 @@ if __name__ == '__main__':
     # # for every txt files
     for i in range(n_datasets):
         
-        sor = os.path.join(infpath, results[i], 'predictions_sorted.txt')
+        sor = os.path.join(infpath, results[i], 'predictions_sorted_updated.txt')
         print("sor: ",sor)
         with open(sor,'r') as file:
             lines = file.read().split('\n')
@@ -191,102 +196,5 @@ if __name__ == '__main__':
     plt.ylabel("Hit Rate")
     plt.title("Train Code validation")
     plt.legend()
-    plt.savefig('/home2/escho/pros/hitrate_ea.png')
+    plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/inf_results/hitrate_graph/hitrate_ea.png')
 
-"""
-
-
-
-import sys
-import os
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.ticker import MaxNLocator
-
-evalset = ['1J2X_A_18_B', '1GUX_B_9_E', '1LB6_A_9_B', '1OAI_A_9_B', '1SQK_A_25_B', '1WKW_A_20_B', '2G30_A_16_P', '2HPL_A_5_B', '2NM1_A_17_B', '2OKR_A_24_C', '2PEH_A_10_C', '2PUY_B_10_E', '2PV1_A_7_B', '2QN6_A_18_C', '2QOS_C_11_A', '3D9U_A_6_B', '3H8A_A_28_E', '3HBV_P_7_Z', '3LU9_B_25_C', '3MHP_A_26_C', '3O37_A_10_E', '3PLV_A_21_C', '4K0U_A_15_B', '4M5S_A_10_B', '4Q5U_A_24_C', '4QJA_A_10_P', '5CRW_A_11_B', '5EPP_A_15_B', '5FZT_A_23_B']
-
-def find_file(directory, pattern):
-    for file in os.listdir(directory):
-        if pattern in file:
-            return True
-    return False
-
-def prepinferece(basepath):
-    curdir = os.getcwd()
-    for index, elem in enumerate(evalset):
-        infpath = '/home2/escho/GNN_DOVE_PEPRANK/inf_results'
-        os.chdir(infpath)
-        os.system(f'echo {infpath}; ls fixed-reduce | wc -l')
-        if not find_file(infpath, 'correctlist'):
-            os.system('awk -F\',\' \'{if ($2 >= 0.8) print $1}\' dockQ_results_sorted.csv > correctlist')
-        if find_file(os.path.join(infpath, 'fixed-reduce'), 'crt'):
-            print(f'crt found in {infpath}/fixed-reduce')
-            continue
-        defiles = [x for x in os.listdir(infpath) if ".pdb" in x and not "-if" in x]
-        for index, file in enumerate(defiles):
-            if os.system(f'grep {file} correctlist') == 0:
-                os.system(f'mv {file} {file[:-3]}crt.pdb')
-        os.system(f'mkdir fixed-reduce')
-
-def plot_performance(metrics, labels, title, ylabel, save_path):
-    for metric, label in zip(metrics, labels):
-        plt.plot(metric, label=label)
-    plt.title(title)
-    plt.xlabel('Rank')
-    plt.ylabel(ylabel)
-    plt.legend()
-    plt.savefig(save_path)
-    plt.close()
-
-def load_metrics(file_path):
-    with open(file_path, 'r') as f:
-        lines = f.readlines()
-    metrics = [float(line.strip()) for line in lines]
-    return metrics
-
-if __name__ == "__main__":
-    baseinfapath = '/rv2/biodata/pep_dataset/'
-    paramfilepath = '/home/jsp/pros/peprank/model/2024-10-24T12:47.pth.tar'
-    if len(sys.argv) > 2:
-        baseinfpath = sys.argv[1]
-    if len(sys.argv) > 3:
-        paramfilepath = sys.argv[2]
-
-    graph_xmax = 1000
-
-    curdir = os.getcwd()
-    infpath = os.path.join(curdir, 'inf_results_2024-10-24T12:47')
-    results = [x for x in os.listdir(infpath) if os.path.isdir(os.path.join(infpath, x))]
-    n_datasets = len(results)
-    print(n_datasets)
-    board = [[0] * graph_xmax for _ in range(n_datasets)]
-    board2 = [[0] * graph_xmax for _ in range(n_datasets)]
-
-    for i in range(n_datasets):
-        sor = os.path.join(infpath, results[i], 'predictions_sorted.txt')
-        print("sor: ", sor)
-        with open(sor, 'r') as file:
-            lines = file.read().split('\n')
-        samesame = 0
-        previous = float(lines[0].split('\t')[1])
-        ind = 0
-        for line in lines:
-            if line.strip() == '':
-                continue
-            score = float(line.split('\t')[1])
-            if score == previous:
-                samesame += 1
-            else:
-                samesame = 0
-            previous = score
-            rank = ind + 1 - samesame
-            board[i][rank - 1] = score
-            ind += 1
-
-    avg_board = np.mean(board, axis=0)
-    plt.plot(range(1, graph_xmax + 1), avg_board)
-    plt.title('Average Score by Rank')
-    plt.xlabel('Rank')
-    plt.ylabel('Score')
-    plt.savefig('average_score_by_rank.png')
-    plt.close()
