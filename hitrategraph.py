@@ -77,6 +77,11 @@ if __name__ == '__main__':
         
         sor = os.path.join(infpath, results[i], 'predictions_sorted_updated.txt')
         print("sor: ",sor)
+        if not os.path.exists(sor):
+            print(f"File not found: {sor}")
+            continue  # Skip this iteration if the file does not exist
+
+
         with open(sor,'r') as file:
             lines = file.read().split('\n')
         samesame = 0
