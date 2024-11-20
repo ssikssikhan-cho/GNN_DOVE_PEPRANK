@@ -19,7 +19,7 @@ def getatomfeaturelen(newfeat = False):
     base = len(t_atom_dti) if (not newfeat) else len(list(elecneg)) + 1 #elect neg
     return len(t_degree) + len(t_totalnumhs) + len(t_impval) + base + 1 #isaromatic
 
-def atom_feature(m, atom_i, include_implicitvalence=True, include_elecneg=True):
+def atom_feature(m, atom_i, include_implicitvalence=False, include_elecneg=False):
     atom = m.GetAtomWithIdx(atom_i)
     atsym = atom.GetSymbol()
     
@@ -47,7 +47,7 @@ def atom_feature(m, atom_i, include_implicitvalence=True, include_elecneg=True):
                     [atom.GetIsAromatic()])
                     # (10, 6, 5, 6, 1) --> total 28
     """
-def featurize(m, atom_i, include_implicitvalence=True, include_elecneg=True):
+def featurize(m, atom_i, include_implicitvalence=False, include_elecneg=False):
     atom = m.GetAtomWithIdx(atom_i)
     atsym = atom.GetSymbol()
 
@@ -78,7 +78,7 @@ def featurize(m, atom_i, include_implicitvalence=True, include_elecneg=True):
 def getatomfeaturelen_f():
     return len(list(elecneg)) + len(t_six) + len(t_six) + 1 + 1
 
-def featurize_f(m, atom_i, include_implicitvalence=True, include_elecneg=True):
+def featurize_f(m, atom_i, include_implicitvalence=False, include_elecneg=False):
     atom = m.GetAtomWithIdx(atom_i)
     atsym = atom.GetSymbol()
     atomtype = list(elecneg)
@@ -111,7 +111,7 @@ def featurize_f(m, atom_i, include_implicitvalence=True, include_elecneg=True):
                     [elecneg[atsym if (atsym in atomtype) else atomtype[-1]]])
                     # 15 + 6 + 6 + 1 + 1 = 29
     """
-def get_atom_feature_f(m, dist_ligand = 0, include_implicitvalence=True, include_elecneg=True):
+def get_atom_feature_f(m, dist_ligand = 0, include_implicitvalence=False, include_elecneg=False):
     n = m.GetNumAtoms()
     atom_feature_len = getatomfeaturelen_f()
     if not include_implicitvalence:
@@ -128,7 +128,7 @@ def get_atom_feature_f(m, dist_ligand = 0, include_implicitvalence=True, include
         H = np.concatenate([np.zeros((n,atom_feature_len)), H], 1)
     return H
 
-def get_atom_feature(m, is_ligand=True, include_implicitvalence=True, include_elecneg=True):
+def get_atom_feature(m, is_ligand=True, include_implicitvalence=False, include_elecneg=False):
     n = m.GetNumAtoms()
     atom_feature_len = len(one_hot_encoding('', t_atom)) + len(t_degree) + len(t_totalnumhs) + 1  # 기본 피처
     if include_implicitvalence:

@@ -30,7 +30,7 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
         
-def train_model(model, train_dataloader, optimizer, loss_fn, device, include_implicitvalence=True, include_elecneg=True):
+def train_model(model, train_dataloader, optimizer, loss_fn, device, include_implicitvalence=False, include_elecneg=False):
     Loss = AverageMeter()
     model.train()
     iteration = int(len(train_dataloader))

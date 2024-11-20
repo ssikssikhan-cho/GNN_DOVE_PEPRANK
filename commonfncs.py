@@ -19,7 +19,7 @@ def getatomfeaturelen(newfeat = False):
     base = len(t_atom_dti) if (not newfeat) else len(list(elecneg)) + 1 #elect neg
     return len(t_degree) + len(t_totalnumhs) + len(t_impval) + base + 1 #isaromatic
 
-def atom_feature(m, atom_i, include_implicitvalence=True, include_elecneg=True):
+def atom_feature(m, atom_i, include_implicitvalence=False, include_elecneg=False):
     atom = m.GetAtomWithIdx(atom_i)
     atsym = atom.GetSymbol()
     features = one_hot_encoding(atsym, t_atom_dti) + \
@@ -36,7 +36,7 @@ def atom_feature(m, atom_i, include_implicitvalence=True, include_elecneg=True):
 
     return np.array(features)
 
-def featurize(m, atom_i,include_implicitvalence=True, include_elecneg=True):
+def featurize(m, atom_i,include_implicitvalence=False, include_elecneg=False):
     atom = m.GetAtomWithIdx(atom_i)
     return np.array(one_hot_encoding(atsym, atomtype) +
                   one_hot_encoding(atom.GetDegree(), t_six) +
