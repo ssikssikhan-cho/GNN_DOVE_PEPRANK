@@ -212,5 +212,5 @@ if __name__ == '__main__':
     plt.ylabel("Hit Rate")
     plt.title("Train Code validation")
     plt.legend()
-    plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/inf_results/hitrate_graph/hitrate_ea.png')
+    plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/hitrate_graph/hitrate_ea.png')
 
