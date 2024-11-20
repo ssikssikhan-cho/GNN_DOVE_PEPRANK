@@ -212,5 +212,13 @@ if __name__ == '__main__':
     plt.ylabel("Hit Rate")
     plt.title("Train Code validation")
     plt.legend()
+
+
+    # 그래프 아래의 면적 계산
+    area = np.trapz(c, dx=1)
+    print(f'Area under the curve: {area}')
+
+    # 그래프에 면적값 추가
+    plt.text(0.5, 0.5, f'Area: {area:.2f}', transform=ax.transAxes, fontsize=12, verticalalignment='center')
     plt.savefig('/home2/escho/GNN_DOVE_PEPRANK/hitrate_graph/hitrate_ea.png')
 
