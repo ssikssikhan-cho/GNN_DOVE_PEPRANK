@@ -94,9 +94,16 @@ if __name__ == '__main__':
         #print(f'board2[{i}]: ', board[i])
         
         for k in range(graph_xmax):
+            line_parts = lines[k].split('\t')
+            if len(line_parts) < 2:
+                print(f"Line {k} is malformed: {lines[k]}")
+                continue  # Skip this iteration if the line is malformed
             
-            score = float(lines[k].split('\t')[1])
-            name = lines[k].split('\t')[0]
+            #score = float(lines[k].split('\t')[1])
+            #name = lines[k].split('\t')[0]
+
+            score = float(line_parts[1])
+            name = line_parts[0]
                 
             # if there is one hit in group, after that rank is always hit.
             if 'crt' in name:
