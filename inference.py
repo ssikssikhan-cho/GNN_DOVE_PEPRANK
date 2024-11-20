@@ -19,7 +19,7 @@ npzdirpf = '/home2/escho/GNN_DOVE_PEPRANK/npz-nf'
 def inference_dir(params):
     global npzdirpf
 
-    input_path = os.path.abspath(params['F']) if params['F'] else '/mnt/rv1/althome/escho/training_dataset/middle/'
+    input_path = os.path.abspath(params['F']) if params['F'] else '/mnt/rv1/althome/escho/training_dataset/random_pdb_include_dockQ/'
     save_path = '/home2/escho/GNN_DOVE_PEPRANK/inf_results'
     os.system(f'mkdir -p {save_path}')
     save_path = os.path.join(save_path, input_path.split('/')[-1])
@@ -105,12 +105,23 @@ def inference_dir(params):
     os.system("sort -n -k 2 -r "+pred_path+" >"+pred_sort_path)
 
 
+def apply_inference_to_subfolders(base_path, params):
+    subfolders = [f.path for f in os.scandir(base_path) if f.is_dir()]
+    
+    for subfolder in subfolders:
+        print(f"Processing folder: {subfolder}")
+        params['F'] = subfolder  # 각 하위 폴더를 입력 경로로 설정
+        try:
+            inference_dir(params)
+        except Exception as e:
+            print(f"Error processing {subfolder}: {e}")
+
 
 if __name__ == "__main__":
     params = argparser()
     os.environ['CUDA_VISIBLE_DEVICES'] = params['gpu']
-    inference_dir(params)
-
+    #inference_dir(params)
+    apply_inference_to_subfolders("/mnt/rv1/althome/escho/training_dataset/random_pdb_include_dockQ", params)
 
 
 
