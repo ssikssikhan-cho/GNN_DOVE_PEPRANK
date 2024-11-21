@@ -72,14 +72,25 @@ def verifynpzfiles(filelist):
             data['Y']
         except:
             print(file)
-    
+
+
+
+
+
 
 if __name__ == "__main__":
     params = argparser()
     print(params)
 
+    #feature_length= len(one_hot_encoding(atsym, t_atom_dti)) + \
+    #                len(one_hot_encoding(atom.GetDegree(), t_degree)) + \
+    #               len(one_hot_encoding(atom.GetTotalNumHs(), t_totalnumhs)) + \
+    #                (len(one_hot_encoding(atom.GetImplicitValence(), t_impval)) if include_implicitvalence else 0) + \
+    #                (1 if include_elecneg else 0) + \
+    #                1
+
     os.environ["CUDA_VISIBLE_DEVICES"] = params['gpu']
-    model = GNN_EA(getatomfeaturelen_f(), n_heads=params['n_heads'],
+    model = GNN_EA( 22, n_heads=params['n_heads'],
                    n_gat_layers=params['n_gat_layers'], dim_gat_feat=params['dim_gat_feat'],
                    dim_fcl_feat=params['dim_fcl_feat'], n_fcl=params['n_fcl'],
                    dropout=params['dropout'])
