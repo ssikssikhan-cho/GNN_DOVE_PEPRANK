@@ -85,7 +85,7 @@ def inference_dir(params):
     dataset = npzdataset(list_npz)
     dataloader = DataLoader(dataset, params['batch_size'], shuffle=False,
                             num_workers=params['num_workers'],
-                            collate_fn=collate_fn_orgA2)
+                            drop_last=False, collate_fn=collate_fn_orgA2)
 
     # prediction
     preds = []
