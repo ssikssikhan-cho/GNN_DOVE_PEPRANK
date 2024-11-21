@@ -20,7 +20,7 @@ Y = np.array([1.0])
 recifext = ".rec-if.pdb"
 ligifext = ".lig-if.pdb"
 
-def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = False, include_implicitvalence=False, include_elecneg=False):
+def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = True, include_implicitvalence=False, include_elecneg=False):
     global input_path
     global Y
 
