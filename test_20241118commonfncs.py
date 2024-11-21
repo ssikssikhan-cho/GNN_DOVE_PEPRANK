@@ -19,6 +19,14 @@ def getatomfeaturelen(newfeat = False):
     base = len(t_atom_dti) if (not newfeat) else len(list(elecneg)) + 1 #elect neg
     return len(t_degree) + len(t_totalnumhs) + len(t_impval) + base + 1 #isaromatic
 
+#def get_atom_feature_length(npz_file_path):
+#    data = np.load(npz_file_path)
+#    H = data['H']
+#    atom_feature_length = H.shape[1]
+#    return atom_feature_length
+#나중에 써보기
+
+
 def atom_feature(m, atom_i, include_implicitvalence=False, include_elecneg=False):
     atom = m.GetAtomWithIdx(atom_i)
     atsym = atom.GetSymbol()
