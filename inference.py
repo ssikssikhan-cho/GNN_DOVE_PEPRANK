@@ -19,7 +19,7 @@ npzdirpf = '/home2/escho/GNN_DOVE_PEPRANK/npz-nf'
 def inference_dir(params):
     global npzdirpf
 
-    input_path = os.path.abspath(params['F']) if params['F'] else '/mnt/rv1/althome/escho/training_dataset/random_pdb_include_dockQ/'
+    input_path = os.path.abspath(params['F']) if params['F'] else '/mnt/rv1/althome/escho/training_dataset/random_pdb_include_dockQ'
     save_path = '/home2/escho/GNN_DOVE_PEPRANK/inf_results'
     os.system(f'mkdir -p {save_path}')
     save_path = os.path.join(save_path, input_path.split('/')[-1])
@@ -76,8 +76,8 @@ def inference_dir(params):
     for item in listfiles:
         input_pdb_path=os.path.join(input_path,item)
         input_file = generate_npz_file(input_pdb_path, npzdirpf='npz-nf', forcenpzgen=True,
-                                       include_implicitvalence=params['--include_implicitvalence'],
-                                       include_elecneg=params['--include_elecneg']) #delete newfeat = True parameter
+                                       include_implicitvalence=params['include_implicitvalence'],
+                                       include_elecneg=params['include_elecneg']) #delete newfeat = True parameter
         #input_file = generate_npz_file(input_pdb_path, npzdirpf=npzdirpf)
         if None != input_file:
             Input_File_List.append(input_file)
