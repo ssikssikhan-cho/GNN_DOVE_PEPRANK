@@ -90,9 +90,12 @@ if __name__ == "__main__":
     device = torch.device('cuda')
     model.to(device)
 
-    path = '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb/npz-eas/'
-    list_posfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
-    list_negfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
+    #path = '/mnt/rv1/althome/escho/training_dataset/posi_+_nega_pdb/npz-eas/'
+    #list_posfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
+    #list_negfile = [path + x for x in os.listdir(path) if ".npz" in x and not x.startswith('.')]
+
+    list_posfile = []
+    list_negfile = []
 
     maxlen = params['maxfnum']
     if params['F'] is not None:
