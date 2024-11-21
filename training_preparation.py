@@ -93,6 +93,7 @@ def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = True, inclu
         valid = np.zeros((receptor_count + ligand_count,))
         valid[receptor_count:] = 1 
         np.savez(npz_path,  H=H, A1=agg_adj1, A2=agg_adj2, V=valid, Y = Y)
+        print(H)
     except Exception as e:
         print(f"Error processing {pdb_name}: {e}")
         return None
