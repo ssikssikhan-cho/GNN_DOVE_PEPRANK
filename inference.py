@@ -79,6 +79,10 @@ def inference_dir(params):
                                        include_implicitvalence=params['include_implicitvalence'],
                                        include_elecneg=params['include_elecneg']) #delete newfeat = True parameter
         #input_file = generate_npz_file(input_pdb_path, npzdirpf=npzdirpf)
+        data = np.load(input_file)
+        H = data['H']
+        print("H (Feature Matrix):")
+        print(H)
         if None != input_file:
             Input_File_List.append(input_file)
     list_npz = Input_File_List
