@@ -82,7 +82,7 @@ def inference_dir(params):
         data = np.load(input_file)
         H = data['H']
         print("H (Feature Matrix):")
-        print(H)
+        print(H)#
         if None != input_file:
             Input_File_List.append(input_file)
     list_npz = Input_File_List
