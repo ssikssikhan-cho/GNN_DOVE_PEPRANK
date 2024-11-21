@@ -71,6 +71,8 @@ def collate_fn_orgA2(batch):
 
 def collate_genA2(batch):
     max_natoms = max([len(item['H']) for item in batch if item is not None])
+    feat_dim = batch[0]['H'].shape[1]  # 첫 번째 샘플의 특징 벡터 크기를 사용하여 feat_dim 설정
+    print(f"Feature dimension: {feat_dim}")
     #for item in batch:
     #    print('H shape: ', item['H'].shape) 
     Hs = [len(item['H']) for item in batch if item is not None]

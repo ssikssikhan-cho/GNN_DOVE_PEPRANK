@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from collections import OrderedDict
 import torch.nn as nn
 from argparser import argparser
-from test_20241118commonfncs import getatomfeaturelen, getatomfeaturelen_f, get_atom_feature_length
+from test_20241118commonfncs import getatomfeaturelen, getatomfeaturelen_f
 
 npzdirpf = '/home2/escho/GNN_DOVE_PEPRANK/npz-nf'
 
@@ -32,7 +32,7 @@ def inference_dir(params):
     #model_path = "model/2024-10-15T21:09.pth.tar"
     chkpts = True if 'chkpts' in  model_path else False
 
-    feature_len = get_atom_feature_length(input_path) #22 getatomfeaturelen_f()
+    feature_len = 28 #getatomfeaturelen_f()
     print(f"Feature vector length: {feature_len}")
     #model = GNN_EA(getatomfeaturelen(True))
     model = GNN_EA(feature_len, n_heads=params['n_heads'],
