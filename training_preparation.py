@@ -161,8 +161,8 @@ def verify_npz_dir_mp(dirpath, num_procs = 10):
 
 if __name__ == "__main__":
     gNpzdir = 'npz-eas'  # 기본 디렉토리 설정
-    include_implicitvalence = True  # 기본값: implicitvalence 포함
-    include_elecneg = True  # 기본값: elecneg 포함
+    include_implicitvalence = False  # 기본값: implicitvalence 미포함
+    include_elecneg = False  # 기본값: elecneg 미포함
 
     # 명령줄 인자로 파라미터를 입력받아 설정
     if len(sys.argv) > 1:
