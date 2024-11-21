@@ -92,6 +92,7 @@ def inference_dir(params):
     torch.no_grad()
     for idx, sample in enumerate(dataloader):
         H, A1, A2, V, Atom_count, Y = sample
+        print(f"Data feature vector length: {H.shape[2]}")
         pred = model((H.to(device), A1.to(device), A2.to(device), V.to(device), Atom_count.to(device)), device)
         preds += list(pred.detach().cpu().numpy())
     
