@@ -20,7 +20,7 @@ Y = np.array([1.0])
 recifext = ".rec-if.pdb"
 ligifext = ".lig-if.pdb"
 
-def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = True, include_implicitvalence=True, include_elecneg=False):
+def generate_npz_file(structure_path, npzdirpf = None, forcenpzgen = True, include_implicitvalence=False, include_elecneg=True):
     global input_path
     global Y
 
@@ -161,8 +161,8 @@ def verify_npz_dir_mp(dirpath, num_procs = 10):
 
 if __name__ == "__main__":
     gNpzdir = 'npz-eas'  # 기본 디렉토리 설정
-    include_implicitvalence = True  # 기본값: implicitvalence 미포함
-    include_elecneg = False  # 기본값: elecneg 미포함
+    include_implicitvalence = False  # 기본값: implicitvalence 미포함
+    include_elecneg = True  # 기본값: elecneg 미포함
 
     # 명령줄 인자로 파라미터를 입력받아 설정
     if len(sys.argv) > 1:
