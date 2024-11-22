@@ -90,7 +90,7 @@ if __name__ == "__main__":
     #                1
 
     os.environ["CUDA_VISIBLE_DEVICES"] = params['gpu']
-    model = GNN_EA( 28, n_heads=params['n_heads'],
+    model = GNN_EA( 23, n_heads=params['n_heads'],
                    n_gat_layers=params['n_gat_layers'], dim_gat_feat=params['dim_gat_feat'],
                    dim_fcl_feat=params['dim_fcl_feat'], n_fcl=params['n_fcl'],
                    dropout=params['dropout'])
