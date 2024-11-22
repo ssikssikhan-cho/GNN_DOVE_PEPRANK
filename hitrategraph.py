@@ -53,7 +53,7 @@ def genpredictedscores(basepath, parampath):
 
 if __name__ == '__main__':
     #baseinfapath = '/rv2/biodata/pep_dataset/'
-    paramfilepath = '/home2/escho/GNN_DOVE_PEPRANK/model/2024-11-21T20:26.pth.tar'
+    paramfilepath = '/home2/escho/GNN_DOVE_PEPRANK/model/2024-11-22T16:11.pth.tar'
     if (len(sys.argv) > 2):
         baseinfpath = sys.argv[1]
     if (len(sys.argv) > 3):    
