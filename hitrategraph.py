@@ -25,7 +25,7 @@ def find_file(directory, pattern):
 def prepinferece(basepath):
     curdir = os.getcwd()
     for index, elem in enumerate(evalset):
-        infpath = '/home2/escho/GNN_DOVE_PEPRANK/inf_results'
+        infpath = '/home2/escho/GNN_DOVE_PEPRANK/inf_results_TT'
         os.chdir(infpath)
         os.system(f'echo {infpath}; ls fixed-reduce | wc -l')
         if find_file(infpath, 'correctlist') == False:
@@ -53,7 +53,7 @@ def genpredictedscores(basepath, parampath):
 
 if __name__ == '__main__':
     #baseinfapath = '/rv2/biodata/pep_dataset/'
-    paramfilepath = '/home2/escho/GNN_DOVE_PEPRANK/model/2024-11-22T19:47.pth.tar'
+    paramfilepath = '/home2/escho/GNN_DOVE_PEPRANK/model/2024-11-19T12:54.pth.tar'
     if (len(sys.argv) > 2):
         baseinfpath = sys.argv[1]
     if (len(sys.argv) > 3):    
@@ -61,11 +61,11 @@ if __name__ == '__main__':
 
 #    genpredictedscores(baseinfapath, paramfilepath)
 #    exit()
-    graph_xmax = 1000
+    graph_xmax = 49000
 
     curdir = os.getcwd()
     #infpath = os.path.join(curdir, 'inf_results_2024-10-24T12:47')
-    infpath = '/home2/escho/GNN_DOVE_PEPRANK/inf_results/'
+    infpath = '/home2/escho/GNN_DOVE_PEPRANK/inf_results_TT/'
     results=[x for x in os.listdir(infpath) if os.path.isdir(os.path.join(infpath, x))]
     n_datasets = len(results)
     print(n_datasets)
