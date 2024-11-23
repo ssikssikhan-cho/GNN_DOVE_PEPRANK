@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
 #    genpredictedscores(baseinfapath, paramfilepath)
 #    exit()
-    graph_xmax = 49000
+    graph_xmax = 45000
 
     curdir = os.getcwd()
     #infpath = os.path.join(curdir, 'inf_results_2024-10-24T12:47')
