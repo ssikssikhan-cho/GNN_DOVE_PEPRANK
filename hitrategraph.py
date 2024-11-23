@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
 #    genpredictedscores(baseinfapath, paramfilepath)
 #    exit()
-    graph_xmax = 45000
+    graph_xmax = 1000
 
     curdir = os.getcwd()
     #infpath = os.path.join(curdir, 'inf_results_2024-10-24T12:47')
@@ -88,8 +88,8 @@ if __name__ == '__main__':
         previous = float(lines[0].split('\t')[1])
         ind = 0
         for k in range(1, graph_xmax):
-            if k >= len(lines):
-               break
+            #if k >= len(lines):
+            #   break
             #line_parts = lines[k].split('\t')
             #if len(line_parts) < 2:
             #    print(f"Line {k} is malformed: {lines[k]}")
@@ -100,8 +100,8 @@ if __name__ == '__main__':
             #print('score: ', score)
             if score != previous:
                 samesame += 1
-            else:
-                samesame = 0    
+            #else:
+            #    samesame = 0    
             previous = score
             board2[i][k] = samesame
         #print(f'board2[{i}]: ', board[i])
