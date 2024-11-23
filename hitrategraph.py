@@ -100,6 +100,8 @@ if __name__ == '__main__':
             #print('score: ', score)
             if score != previous:
                 samesame += 1
+            else:
+                samesame = 0    
             previous = score
             board2[i][k] = samesame
         #print(f'board2[{i}]: ', board[i])
