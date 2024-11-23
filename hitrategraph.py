@@ -88,6 +88,8 @@ if __name__ == '__main__':
         previous = float(lines[0].split('\t')[1])
         ind = 0
         for k in range(1, graph_xmax):
+            if k >= len(lines):
+               break
             #line_parts = lines[k].split('\t')
             #if len(line_parts) < 2:
             #    print(f"Line {k} is malformed: {lines[k]}")
